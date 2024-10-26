@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - YouCart</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Your Cart</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="youcart.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <h2>Items in Your Cart</h2>
+    <div class="cart-products" id="cartProductContainer"></div>
+    
+    <!-- Section to Display Total Amount -->
+    <div id="totalAmountContainer">
+        <h3>Total Amount: ₹<span id="totalAmount">0</span></h3>
+    </div>
+    
+    <hr>
+    <button id="checkoutButton">Checkout</button>
+    <button id="removeAllButton" onclick="removeAllFromCart()">Remove All</button>
+</div>
+
+<script>
+    // Function to Load Products from Local Storage and Display Them
+    function loadCartItems() {
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const cartProductContainer = document.getElementById("cartProductContainer");
+        const totalAmountContainer = document.getElementById("totalAmount");
+
+        if (cartItems.length === 0) {
+            cartProductContainer.innerHTML = "<p>Your cart is empty.</p>";
+            document.getElementById("checkoutButton").style.display = "none"; // Hide checkout button
+            document.getElementById("removeAllButton").style.display = "none"; // Hide remove all button
+            totalAmountContainer.innerHTML = "0"; // Set total amount to 0
+            return;
+        } else {
+            document.getElementById("checkoutButton").style.display = "block"; // Show checkout button
+            document.getElementById("removeAllButton").style.display = "block"; // Show remove all button
+        }
+
+        let totalAmount = 0;
+        cartProductContainer.innerHTML = ''; // Clear previous items
+
+        cartItems.forEach((item, index) => {
+            const productItem = document.createElement("div");
+            productItem.classList.add("product-item");
+
+            // Calculate item total based on quantity
+            const itemTotal = item.price * item.quantity;
+            totalAmount += itemTotal; // Add to total amount
+
+            productItem.innerHTML = `
+                <img src="${item.img}" alt="${item.name}">
+                <h3>${item.name}</h3>
+                <p>${item.description}</p>
+                <p>Price: ₹${item.price} x ${item.quantity} = ₹${itemTotal}</p>
+                <button onclick="removeFromCart(${index})">Remove</button>
+            `;
+
+            cartProductContainer.appendChild(productItem);
+        });
+
+        // Update total amount display
+        totalAmountContainer.innerText = totalAmount;
+    }
+
+    // Function to Remove a Single Product from Cart
+    function removeFromCart(index) {
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        cartItems.splice(index, 1); // Remove the item at the specified index
+        localStorage.setItem('cartItems', JSON.stringify(cartItems)); // Update local storage
+        loadCartItems(); // Reload cart items
+    }
+
+    // Function to Remove All Products from Cart
+    function removeAllFromCart() {
+        localStorage.removeItem('cartItems'); // Clear all items from local storage
+        loadCartItems(); // Reload cart items
+        alert("All items have been removed from your cart.");
+    }
+
+    // Checkout Functionality
+    document.getElementById("checkoutButton").addEventListener("click", function() {
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        if (cartItems.length === 0) {
+            alert("Your cart is empty!");
+            return;
+        }
+        // Redirect to payment page
+        window.location.href = 'payment.html'; // Redirect to payment page
+    });
+
+    // Load cart items when the page loads
+    window.onload = loadCartItems;
+</script>
+
+</body>
+</html>

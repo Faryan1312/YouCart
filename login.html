@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouCart - Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Login to YouCart</h1>
+</header>
+
+<nav>
+</nav>
+
+<div class="container">
+    <h2>Log In to Your Account</h2>
+    <form id="loginForm" onsubmit="handleLogin(event)">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Log In</button>
+    </form>
+    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+</div>
+
+<script>
+    // Handle Login and Redirect to Home Page
+    function handleLogin(event) {
+        event.preventDefault(); // Prevent form submission
+        // Here, you would normally validate login credentials
+        alert("Login successful! Redirecting to Home page...");
+        window.location.href = "youcart.html"; // Redirect to Home page
+    }
+</script>
+
+</body>
+</html>

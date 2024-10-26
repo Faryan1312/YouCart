@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouCart - Products</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Products</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="youcart.html">Home</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <h2>Explore Our Products</h2>
+    
+    <!-- Dropdown to Select Category -->
+    <label for="categorySelect">Choose a category:</label>
+    <select id="categorySelect" onchange="displayProducts()">
+        <option value="vegetables">Vegetables</option>
+        <option value="fruits">Fruits</option>
+        <option value="dairy">Dairy</option>
+    </select>
+    <hr>
+
+    <!-- Section for Displaying Products -->
+    <div class="products" id="productContainer"></div>
+</div>
+
+<script>
+    // JavaScript Data for Products with Prices
+    const productsData = {
+        vegetables: [
+            { img: "https://www.hhs1.com/hubfs/carrots%20on%20wood-1.jpg", name: "Carrots", description: "Fresh organic carrots", price: 50 },
+            { img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEV9tHvNp6TX9HoATyuZwt3KHyjyfjoBvrrg&s", name: "Broccoli", description: "Healthy green broccoli", price: 40 }
+        ],
+        fruits: [
+            { img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdtdYCbESWIzJKitHW3BRwpb_49riJlXHrPA&s", name: "Apples", description: "Crunchy and sweet apples", price: 80 },
+            { img: "https://www.healthifyme.com/blog/wp-content/uploads/2023/11/shutterstock_331719362-1.jpg", name: "Bananas", description: "Fresh bananas full of nutrients", price: 60 }
+        ],
+        dairy: [
+            { img: "https://images.indianexpress.com/2024/08/milk-1-1.jpg?w=414", name: "Milk", description: "Fresh farm milk", price: 60 },
+            { img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB80hnG7AFwGM0E0KTSJXoE7j9CtjxA7ZB6A&s", name: "Cheese", description: "Delicious cheese varieties", price: 60 }
+        ],
+    };
+
+    // Function to Display Products Based on Selected Category
+    function displayProducts() {
+        const category = document.getElementById("categorySelect").value;
+        const productContainer = document.getElementById("productContainer");
+        
+        // Clear previous products
+        productContainer.innerHTML = '';
+
+        // Populate products based on selected category
+        productsData[category].forEach(product => {
+            const productItem = document.createElement("div");
+            productItem.classList.add("product-item");
+
+            productItem.innerHTML = `
+                <img src="${product.img}" alt="${product.name}">
+                <h3>${product.name}</h3>
+                <p>${product.description}</p>
+                <p>Price: ₹${product.price}</p>
+                <label for="quantitySelect_${product.name}">Select Quantity:</label>
+                <select id="quantitySelect_${product.name}">
+                    <option value="1">1 ${category === 'dairy' ? 'L' : 'kg'}</option>
+                    <option value="2">2 ${category === 'dairy' ? 'L' : 'kg'}</option>
+                    <option value="3">3 ${category === 'dairy' ? 'L' : 'kg'}</option>
+                    <option value="4">4 ${category === 'dairy' ? 'L' : 'kg'}</option>
+                    <option value="5">5 ${category === 'dairy' ? 'L' : 'kg'}</option>
+                    <option value="6">6 ${category === 'dairy' ? 'L' : 'kg'}</option>
+                    <option value="7">7 ${category === 'dairy' ? 'L' : 'kg'}</option>
+                    <option value="8">8 ${category === 'dairy' ? 'L' : 'kg'}</option>
+                    <option value="9">9 ${category === 'dairy' ? 'L' : 'kg'}</option>
+                    <option value="10">10 ${category === 'dairy' ? 'L' : 'kg'}</option>
+                </select>
+                <button onclick="addToCart('${product.name}', '${product.img}', '${product.description}', ${product.price})">Add to Cart</button>
+            `;
+
+            productContainer.appendChild(productItem);
+        });
+    }
+
+    // Function to Add Products to Cart
+    function addToCart(name, img, description, price) {
+        const quantitySelect = document.getElementById(`quantitySelect_${name}`);
+        const quantity = quantitySelect.value;
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const item = { name, img, description, price, quantity };
+        cartItems.push(item);
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        alert(`${quantity} ${name}(s) added to cart for ₹${price * quantity}!`);
+    }
+
+    // Set Default Category and Display Products on Page Load
+    window.onload = () => {
+        document.getElementById("categorySelect").value = "vegetables";  // Set the dropdown to "Vegetables" by default
+        displayProducts();  // Display products for the default category
+    };
+</script>
+
+</body>
+</html>

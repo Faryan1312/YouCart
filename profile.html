@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouCart - User Profile</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Your Profile</h1>
+</header>
+
+<nav>
+    <ul>
+       <li><a href="youcart.html">Home</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <h2>Profile Details</h2>
+    <div>
+        <label>Name:</label>
+        <span id="userNameDisplay">User</span>
+    </div>
+    <div>
+        <label>Email:</label>
+        <span id="userEmailDisplay">user@example.com</span>
+    </div>
+    <!-- More user information can be displayed here -->
+</div>
+
+
+<script>
+    // Function to load user data from localStorage
+    function loadUserProfile() {
+        const userName = localStorage.getItem("userName") || "User"; // Default name if none exists
+        const userEmail = localStorage.getItem("userEmail") || "user@example.com"; // Default email if none exists
+
+        document.getElementById("userNameDisplay").innerText = userName;
+        document.getElementById("userEmailDisplay").innerText = userEmail;
+    }
+
+    // Load user profile on page load
+    window.onload = loadUserProfile;
+</script>
+
+</body>
+</html>

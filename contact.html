@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouCart - Contact Us</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Contact Us</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="youcart.html">Home</a></li>
+        
+    </ul>
+</nav>
+
+<div class="container">
+    <h2>We'd love to hear from you!</h2>
+    <form id="contactForm">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="email">Your Email:</label>
+        <input type="email" id="email" required>
+
+        <label for="message">Your Message:</label>
+        <textarea id="message" rows="5" required></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+    <p id="responseMessage"></p>
+</div>
+
+<script>
+    // Handle form submission
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        
+        // Get form data
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const message = document.getElementById("message").value;
+
+        // Simulate form submission success (e.g., send to server)
+        // In a real application, you would send this data to your server via an API call
+
+        // Display a success message
+        document.getElementById("responseMessage").innerText = "Thank you, " + name + "! Your message has been received.";
+        
+        // Reset form fields
+        document.getElementById("contactForm").reset();
+    });
+</script>
+
+</body>
+</html>
